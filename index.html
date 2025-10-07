@@ -7,6 +7,7 @@
     <title>THALA FOR A REASON - MS Dhoni Tribute</title>
 </head>
 <body>
+    <button id="theme-toggle">🌙 Dark Mode</button>
     <main id="main">
         <div class="header">
             <h1 id="title"><u>THALA FOR A REASON</u></h1>
@@ -127,5 +128,18 @@
             </h3>
         </div>
     </main>    
+    <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    if (body.classList.contains('dark-theme')) {
+        toggleBtn.textContent = '☀️ Light Mode';
+    } else {
+        toggleBtn.textContent = '🌙 Dark Mode';
+    }
+    });
+</script>
+
 </body>
 </html>
