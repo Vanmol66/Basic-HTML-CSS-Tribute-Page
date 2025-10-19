@@ -1,5 +1,5 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* Global Reset */
 * {
@@ -8,18 +8,55 @@
     box-sizing: border-box;
 }
 
+/* Custom Properties */
+:root {
+    --primary-blue: #007bff;
+    --primary-blue-dark: #0056b3;
+    --primary-blue-light: #4da3ff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --text-tertiary: #666;
+    --bg-white: #ffffff;
+    --bg-light: #f9f9f9;
+    --bg-gradient-start: #ffffff;
+    --bg-gradient-end: #e8e8e8;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+    --shadow-xl: 0 15px 40px rgba(0,123,255,0.25);
+    --border-radius-sm: 10px;
+    --border-radius-md: 15px;
+    --border-radius-lg: 20px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.4s ease;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Body and Background */
 body {
     font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background:
-        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e8e8e8 100%);
-    background-size: 50px 50px, 50px 50px, 100% 100%;
-    background-position: 0 0, 0 0, 0 0;
-    color: #333;
-    line-height: 1.6;
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(135deg, var(--bg-gradient-start) 0%, #f5f5f5 50%, var(--bg-gradient-end) 100%);
+    background-size: 60px 60px, 60px 60px, 100% 100%;
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.7;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection Color */
+::selection {
+    background-color: var(--primary-blue);
+    color: white;
 }
 
 /* Main container */
@@ -27,31 +64,57 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Header */
 .header {
     text-align: center;
-    padding: 3rem 0;
+    padding: 4rem 0 3rem;
     margin-bottom: 2rem;
 }
 
 #title {
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
-    color: #1a1a1a;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.12);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
     position: relative;
     display: inline-block;
-    animation: floatTitle 3s ease-in-out infinite;
+    animation: floatTitle 4s ease-in-out infinite;
+    letter-spacing: 1px;
+}
+
+#title u {
+    text-decoration-color: var(--primary-blue);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
 }
 
 #title:hover {
-    animation: titleTubelight 1.5s ease-in-out infinite, floatTitle 3s ease-in-out infinite;
+    animation: titleTubelight 1.8s ease-in-out infinite, floatTitle 4s ease-in-out infinite;
+    transform: scale(1.02);
+}
+
+#title:focus {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 8px;
+    border-radius: 8px;
 }
 
 @keyframes floatTitle {
@@ -59,104 +122,148 @@ body {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-15px);
+        transform: translateY(-18px);
     }
 }
 
 @keyframes titleTubelight {
     0%, 100% {
         text-shadow:
-            2px 2px 4px rgba(0,0,0,0.1),
-            0 0 10px rgba(0,123,255,0.15),
-            0 0 20px rgba(0,123,255,0.1),
-            0 0 30px rgba(0,123,255,0.05);
-        color: #1a1a1a;
+            3px 3px 6px rgba(0,0,0,0.12),
+            0 0 15px rgba(0,123,255,0.2),
+            0 0 30px rgba(0,123,255,0.15);
+        color: var(--text-primary);
     }
     50% {
         text-shadow:
-            2px 2px 4px rgba(0,0,0,0.1),
-            0 0 20px rgba(0,123,255,0.3),
-            0 0 40px rgba(0,123,255,0.2),
-            0 0 60px rgba(0,123,255,0.15),
-            0 0 80px rgba(0,123,255,0.1);
-        color: #0066cc;
+            3px 3px 6px rgba(0,0,0,0.12),
+            0 0 25px rgba(0,123,255,0.4),
+            0 0 50px rgba(0,123,255,0.3),
+            0 0 75px rgba(0,123,255,0.2);
+        color: var(--primary-blue-dark);
     }
 }
 
 .header p {
-    font-size: 1.5rem;
-    color: #555;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 /* Image Section */
 #img-div {
     text-align: center;
-    margin: 3rem 0;
+    margin: 4rem 0;
     padding: 2rem;
 }
 
 #image {
-    max-width: 600px;
+    max-width: 650px;
     width: 100%;
     height: auto;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
     display: block;
     margin: 0 auto;
     position: relative;
-    animation: tubelight 3s ease-in-out infinite;
+    animation: tubelight 4s ease-in-out infinite;
+    transition: transform var(--transition-slow);
+    will-change: transform;
+}
+
+#image:hover {
+    transform: scale(1.03);
 }
 
 @keyframes tubelight {
     0%, 100% {
         box-shadow:
             0 10px 30px rgba(0,0,0,0.2),
-            0 0 10px rgba(0,123,255,0.3),
-            0 0 20px rgba(0,123,255,0.2),
-            0 0 40px rgba(0,123,255,0.1);
-        filter: brightness(1);
+            0 0 15px rgba(0,123,255,0.3),
+            0 0 30px rgba(0,123,255,0.2);
+        filter: brightness(1) contrast(1);
     }
     50% {
         box-shadow:
-            0 10px 30px rgba(0,0,0,0.2),
-            0 0 20px rgba(0,123,255,0.6),
-            0 0 40px rgba(0,123,255,0.4),
-            0 0 60px rgba(0,123,255,0.3),
-            0 0 80px rgba(0,123,255,0.2);
-        filter: brightness(1.1);
+            0 15px 40px rgba(0,0,0,0.25),
+            0 0 25px rgba(0,123,255,0.5),
+            0 0 50px rgba(0,123,255,0.4),
+            0 0 75px rgba(0,123,255,0.3);
+        filter: brightness(1.08) contrast(1.05);
     }
 }
 
 #img-caption {
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    color: #666;
+    margin-top: 2rem;
+    font-size: 1.15rem;
+    color: var(--text-tertiary);
     font-style: italic;
+    font-weight: 500;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Tribute Info Section */
 #tribute-info {
-    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin: 3rem 0;
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-white) 50%, var(--bg-light) 100%);
+    padding: 3.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    margin: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+#tribute-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light), var(--primary-blue));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 #tribute-info h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     text-align: center;
-    font-size: 2.5rem;
-    color: #1a1a1a;
-    margin-bottom: 2rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--text-primary);
+    margin-bottom: 3rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: floatHeading 3.5s ease-in-out infinite;
+    transition: var(--transition-normal);
+    animation: floatHeading 4.5s ease-in-out infinite;
+    letter-spacing: 0.5px;
+}
+
+#tribute-info h2 u {
+    text-decoration-color: var(--primary-blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
 }
 
 #tribute-info h2:hover {
-    animation: headingTubelight 1.5s ease-in-out infinite, floatHeading 3.5s ease-in-out infinite;
+    animation: headingTubelight 1.8s ease-in-out infinite, floatHeading 4.5s ease-in-out infinite;
+}
+
+#tribute-info h2:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 6px;
+    border-radius: 6px;
 }
 
 @keyframes floatHeading {
@@ -164,23 +271,23 @@ body {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-12px);
     }
 }
 
 @keyframes headingTubelight {
     0%, 100% {
         text-shadow:
-            0 0 10px rgba(0,123,255,0.12),
-            0 0 20px rgba(0,123,255,0.08);
-        color: #1a1a1a;
+            0 0 12px rgba(0,123,255,0.15),
+            0 0 25px rgba(0,123,255,0.1);
+        color: var(--text-primary);
     }
     50% {
         text-shadow:
-            0 0 20px rgba(0,123,255,0.25),
-            0 0 40px rgba(0,123,255,0.18),
-            0 0 60px rgba(0,123,255,0.12);
-        color: #0066cc;
+            0 0 25px rgba(0,123,255,0.3),
+            0 0 50px rgba(0,123,255,0.22),
+            0 0 75px rgba(0,123,255,0.15);
+        color: var(--primary-blue-dark);
     }
 }
 
@@ -191,14 +298,14 @@ body {
 
 #tribute-info > ul > li {
     position: relative;
-    padding: 1.5rem 2rem;
-    margin: 1rem 0;
-    background: white;
-    border-radius: 10px;
-    border-left: 5px solid #007bff;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 1.75rem 2.25rem;
+    margin: 1.25rem 0;
+    background: var(--bg-white);
+    border-radius: var(--border-radius-sm);
+    border-left: 4px solid var(--primary-blue);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
 }
 
 #tribute-info > ul > li::before {
@@ -208,8 +315,8 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,123,255,0.2), transparent);
-    transition: left 0.6s ease;
+    background: linear-gradient(90deg, transparent, rgba(0,123,255,0.08), transparent);
+    transition: left 0.7s ease;
 }
 
 #tribute-info > ul > li:hover::before {
@@ -217,64 +324,109 @@ body {
 }
 
 #tribute-info > ul > li:hover {
-    transform: translateX(10px);
-    box-shadow: 0 5px 20px rgba(0,123,255,0.3);
-    border-left-color: #0056b3;
+    transform: translateX(12px);
+    box-shadow: var(--shadow-xl);
+    border-left-color: var(--primary-blue-dark);
+    border-left-width: 5px;
+}
+
+#tribute-info > ul > li:focus-within {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+#tribute-info > ul > li b {
+    color: var(--text-primary);
+    font-weight: 700;
 }
 
 #tribute-info ul ul {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     margin-left: 2rem;
     list-style: disc;
+    list-style-position: outside;
 }
 
 #tribute-info ul ul li {
-    padding: 0.5rem 0;
-    color: #555;
+    padding: 0.65rem 0;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+#tribute-info ul ul li::marker {
+    color: var(--primary-blue);
 }
 
 /* Trophy Section Styles */
 .trophy-section {
-    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin: 3rem 0;
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-white) 50%, var(--bg-light) 100%);
+    padding: 3.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    margin: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.trophy-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light), var(--primary-blue));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
 }
 
 .trophy-section h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     text-align: center;
-    font-size: 2.5rem;
-    color: #1a1a1a;
-    margin-bottom: 3rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--text-primary);
+    margin-bottom: 3.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: floatHeading 3.5s ease-in-out infinite;
+    transition: var(--transition-normal);
+    animation: floatHeading 4.5s ease-in-out infinite;
+    letter-spacing: 0.5px;
+}
+
+.trophy-section h2 u {
+    text-decoration-color: var(--primary-blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
 }
 
 .trophy-section h2:hover {
-    animation: headingTubelight 1.5s ease-in-out infinite, floatHeading 3.5s ease-in-out infinite;
+    animation: headingTubelight 1.8s ease-in-out infinite, floatHeading 4.5s ease-in-out infinite;
+}
+
+.trophy-section h2:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 6px;
+    border-radius: 6px;
 }
 
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    gap: 2.5rem;
     padding: 1rem 0;
 }
 
 .trophy-card {
-    background: white;
-    border-radius: 15px;
+    background: var(--bg-white);
+    border-radius: var(--border-radius-md);
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: all 0.4s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-slow);
     position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .trophy-card::before {
@@ -284,9 +436,10 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,123,255,0.1), transparent);
-    transition: left 0.6s ease;
+    background: linear-gradient(90deg, transparent, rgba(0,123,255,0.08), transparent);
+    transition: left 0.7s ease;
     z-index: 1;
+    pointer-events: none;
 }
 
 .trophy-card:hover::before {
@@ -294,131 +447,207 @@ body {
 }
 
 .trophy-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(0,123,255,0.3);
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(0,123,255,0.2);
+}
+
+.trophy-card:focus-within {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
 }
 
 .trophy-card img {
     width: 100%;
-    height: 250px;
+    height: 280px;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: transform var(--transition-slow);
     background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
     flex-shrink: 0;
+    will-change: transform;
 }
 
 .trophy-card:hover img {
-    transform: scale(1.1);
+    transform: scale(1.12);
 }
 
 .trophy-card h3 {
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
-    font-size: 1.5rem;
-    color: #1a1a1a;
+    padding: 1.75rem 1.75rem 1rem 1.75rem;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-primary);
     text-align: center;
-    border-bottom: 3px solid #007bff;
-    margin: 0 1rem;
+    border-bottom: 3px solid var(--primary-blue);
+    margin: 0 1.25rem;
     flex-shrink: 0;
+    letter-spacing: 0.3px;
+    transition: border-color var(--transition-normal);
+}
+
+.trophy-card:hover h3 {
+    border-bottom-color: var(--primary-blue-dark);
 }
 
 .trophy-card p {
-    padding: 1rem 1.5rem 1.5rem 1.5rem;
-    color: #555;
-    font-size: 1rem;
-    line-height: 1.6;
+    padding: 1.25rem 1.75rem 1.75rem 1.75rem;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.75;
     text-align: justify;
     flex-grow: 1;
+    font-weight: 400;
 }
 
 /* Quote Section */
 .quote {
     text-align: center;
-    padding: 3rem 2rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-    border-radius: 20px;
-    margin: 3rem 0;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    padding: 3.5rem 2.5rem;
+    background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 50%, var(--bg-white) 100%);
+    border-radius: var(--border-radius-lg);
+    margin: 4rem 0;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .quote p:first-child {
-    font-size: 1.8rem;
-    color: #1a1a1a;
-    margin-bottom: 1rem;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
     line-height: 1.8;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
 .quote p:nth-child(2) {
-    font-size: 1.2rem;
-    color: #007bff;
-    margin-bottom: 2rem;
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.quote p:nth-child(2) u {
+    text-decoration-color: var(--primary-blue-dark);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
 }
 
 .quote h3 {
-    font-size: 1.3rem;
-    color: #333;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 #tribute-link {
-    color: #007bff;
+    color: var(--primary-blue);
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-    padding-bottom: 2px;
+    transition: all var(--transition-normal);
+    padding-bottom: 3px;
+    font-weight: 600;
 }
 
 #tribute-link:hover {
-    color: #0056b3;
-    border-bottom-color: #0056b3;
+    color: var(--primary-blue-dark);
+    border-bottom-color: var(--primary-blue-dark);
+}
+
+#tribute-link:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 4px;
+    border-radius: 3px;
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    #main {
+        padding: 1.5rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .cards-container {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
+        gap: 2rem;
+    }
+    
+    .trophy-card img {
+        height: 250px;
     }
 }
 
 @media (max-width: 768px) {
-    #title {
-        font-size: 2rem;
-    }
-    
-    .header p {
-        font-size: 1.2rem;
+    .header {
+        padding: 3rem 0 2rem;
     }
     
     #image {
         max-width: 100%;
+        border-radius: var(--border-radius-sm);
     }
     
-    #tribute-info {
-        padding: 2rem 1.5rem;
-    }
-    
-    #tribute-info h2 {
-        font-size: 1.8rem;
+    #tribute-info,
+    .trophy-section {
+        padding: 2.5rem 1.75rem;
+        margin: 3rem 0;
     }
     
     #tribute-info > ul > li {
-        padding: 1rem 1.5rem;
-    }
-
-    .trophy-section {
-        padding: 2rem 1.5rem;
-    }
-    
-    .trophy-section h2 {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
+        padding: 1.5rem 1.75rem;
     }
     
     .cards-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
+    }
+    
+    .trophy-card img {
+        height: 240px;
+    }
+    
+    .trophy-card h3 {
+        font-size: 1.4rem;
+        padding: 1.5rem 1.5rem 0.9rem 1.5rem;
+    }
+    
+    .trophy-card p {
+        font-size: 1rem;
+        padding: 1rem 1.5rem 1.5rem 1.5rem;
+    }
+    
+    .quote {
+        padding: 2.5rem 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #main {
+        padding: 1rem;
+    }
+    
+    .header {
+        padding: 2rem 0 1.5rem;
+    }
+    
+    #img-div {
+        padding: 1.5rem;
+        margin: 2.5rem 0;
+    }
+    
+    #tribute-info,
+    .trophy-section {
+        padding: 2rem 1.25rem;
+        border-radius: var(--border-radius-md);
+    }
+    
+    #tribute-info > ul > li {
+        padding: 1.25rem 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    #tribute-info ul ul {
+        margin-left: 1.5rem;
     }
     
     .trophy-card img {
@@ -427,29 +656,41 @@ body {
     
     .trophy-card h3 {
         font-size: 1.3rem;
-        padding: 1rem 1rem 0.8rem 1rem;
+        padding: 1.25rem 1.25rem 0.8rem 1.25rem;
+        margin: 0 1rem;
     }
     
     .trophy-card p {
         font-size: 0.95rem;
-        padding: 0.8rem 1rem 1rem 1rem;
+        padding: 1rem 1.25rem 1.25rem 1.25rem;
+        line-height: 1.7;
     }
     
-    .quote p:first-child {
-        font-size: 1.3rem;
+    .quote {
+        padding: 2rem 1.5rem;
     }
 }
 
-@media (max-width: 480px) {
-    .trophy-section {
-        padding: 1.5rem 1rem;
+/* Print Styles */
+@media print {
+    body {
+        background: white;
     }
     
-    .trophy-section h2 {
-        font-size: 1.5rem;
+    #title:hover,
+    #tribute-info h2:hover,
+    .trophy-section h2:hover {
+        animation: none;
     }
     
-    .trophy-card img {
-        height: 180px;
+    #image,
+    #tribute-info > ul > li,
+    .trophy-card {
+        box-shadow: none;
+        animation: none;
+    }
+    
+    .trophy-card:hover {
+        transform: none;
     }
 }
